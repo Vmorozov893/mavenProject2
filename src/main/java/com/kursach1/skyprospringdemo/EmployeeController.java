@@ -8,25 +8,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("employee")
 public class EmployeeController {
-    EmployeeService employeeService = new EmployeeService();
-
+    //EmployeeService employeeService = new EmployeeService();
+    Map map = new Map();
     @GetMapping(path = "add")
     public String add(@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName){
-        return employeeService.addEmployee(firstName,lastName).toString();
+        return map.addEmployee(firstName,lastName).toString();
     }
 
     @GetMapping(path = "remove")
     public String remove(@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName){
-        return employeeService.deleteEmployee(firstName,lastName).toString();
+        return map.deleteEmployee(firstName,lastName).toString();
     }
 
     @GetMapping(path = "find")
     public String find(@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName){
-        return employeeService.findEmployee(firstName,lastName).toString();
+        return map.findEmployee(firstName,lastName).toString();
     }
 
-    @GetMapping(path = "list")
+    @GetMapping(path = "map")
     public String list(){
-        return employeeService.getEmployeesArray().toString();
+        return map.getMap().toString();
     }
 }
