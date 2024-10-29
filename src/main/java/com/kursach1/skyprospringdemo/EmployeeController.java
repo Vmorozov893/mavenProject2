@@ -11,8 +11,8 @@ public class EmployeeController {
     //EmployeeService employeeService = new EmployeeService();
     Map map = new Map();
     @GetMapping(path = "add")
-    public String add(@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName){
-        return map.addEmployee(firstName,lastName).toString();
+    public String add(@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, @RequestParam(required = false) Integer salary, @RequestParam(required = false) Integer department){
+        return map.addEmployee(firstName,lastName,salary,department).toString();
     }
 
     @GetMapping(path = "remove")
@@ -27,6 +27,11 @@ public class EmployeeController {
 
     @GetMapping(path = "map")
     public String list(){
-        return map.getMap().toString();
+        return map.getAllEmployees().toString();
     }
+
+    public Map getMap() {
+        return map;
+    }
+
 }

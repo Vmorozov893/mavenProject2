@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -18,34 +19,33 @@ public class EmployeeService {
         return employeesArray;
     }
 
-    public Employee addEmployee(String firstName, String lastName){
-        Employee employee = new Employee(firstName, lastName);
-        if(this.employeesArray.size()==maxCountEmployee){
+    public Employee addEmployee(String firstName, String lastName, Integer salary, Integer department) {
+        Employee employee = new Employee(firstName, lastName, salary, department);
+        if (this.employeesArray.size() == maxCountEmployee) {
             throw new EmployeeStorageIsFullException("Превышен лимит количества сотрудников в фирме!");
         } else if (this.employeesArray.contains(employee)) {
             throw new EmployeeAlreadyAddedException("Такой сотрудник уже есть!");
-        } else{
+        } else {
             this.employeesArray.add(employee);
             return employee;
         }
 
     }
-    public Employee deleteEmployee(String firstName, String lastName){
-        Employee employee = new Employee(firstName, lastName);
-        if(this.employeesArray.contains(employee)){
-            this.employeesArray.remove(employee);
-            return employee;
-        }else {
-            throw new EmployeeNotFoundException("Сотрудник не найден!");
-        }
+
+    public Employee deleteEmployee(String firstName, String lastName) {
+        Optional<Employee> employee = this.employeesArray.stream()
+                .filter(e -> (e.getFirstName() + e.getLastName()).equals(firstName + lastName))
+                .findFirst();
+        this.employeesArray.removeIf(e -> (e.getFirstName() + e.getLastName()).equals(firstName + lastName));
+        return employee.orElseThrow(() -> new RuntimeException("Сотрудник не найден!"));
     }
-    public Employee findEmployee(String firstName, String lastName){
-        Employee employee = new Employee(firstName, lastName);
-        if (this.employeesArray.contains(employee)){
-            return employee;
-        }else{
-            throw new EmployeeNotFoundException("Сотрудник не найден!");
-        }
+
+    public Employee findEmployee(String firstName, String lastName) {
+        Optional<Employee> employee = this.employeesArray.stream()
+                .filter(e -> (e.getFirstName() + e.getLastName()).equals(firstName + lastName))
+                .findFirst();
+
+        return employee.orElseThrow(() -> new RuntimeException("Сотрудник не найден!"));
     }
 
 }
