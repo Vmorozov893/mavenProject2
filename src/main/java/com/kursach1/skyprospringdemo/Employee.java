@@ -5,8 +5,8 @@ import java.util.Objects;
 public class Employee {
     private final String lastName;
     private final String firstName;
-    private Integer salary;
-    private Integer department;
+    private final Integer salary;
+    private final Integer department;
     public Employee(String firstName, String lastName, Integer salary, Integer department) {
         this.firstName = firstName;
         this.lastName = lastName;

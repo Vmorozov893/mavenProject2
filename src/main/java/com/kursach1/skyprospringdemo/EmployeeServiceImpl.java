@@ -1,22 +1,20 @@
 package com.kursach1.skyprospringdemo;
 
+import Interface.EmployeeService;
 import exeption.EmployeeAlreadyAddedException;
 import exeption.EmployeeNotFoundException;
 import exeption.EmployeeStorageIsFullException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 @Service
-public class Map {
-    private HashMap<String,Employee> map = new HashMap();
+public class EmployeeServiceImpl implements EmployeeService {
+    private final HashMap<String,Employee> map = new HashMap();
     private final int maxCountEmployee = 10;
 
-    public List<Employee> getAllEmployees() {
-        return map.values().stream().toList();
+    public HashMap<String,Employee> getAllEmployees() {
+        return map;
     }
 
     public Employee addEmployee (String firstName, String lastName,int salary,int department){
@@ -50,4 +48,7 @@ public class Map {
         }
     }
 
+    public HashMap<String, Employee> getAll() {
+        return map;
+    }
 }

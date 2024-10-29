@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("employee")
 public class EmployeeController {
     //EmployeeService employeeService = new EmployeeService();
-    Map map = new Map();
+    //public Map map = new Map();
+    private final EmployeeServiceImpl map;
+    public EmployeeController(EmployeeServiceImpl map) {
+        this.map = map;
+    }
     @GetMapping(path = "add")
     public String add(@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, @RequestParam(required = false) Integer salary, @RequestParam(required = false) Integer department){
         return map.addEmployee(firstName,lastName,salary,department).toString();
@@ -30,8 +34,7 @@ public class EmployeeController {
         return map.getAllEmployees().toString();
     }
 
-    public Map getMap() {
+    public EmployeeServiceImpl getMap() {
         return map;
     }
-
 }
