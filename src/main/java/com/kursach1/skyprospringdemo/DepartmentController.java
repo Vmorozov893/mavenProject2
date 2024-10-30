@@ -39,5 +39,7 @@ public class DepartmentController {
             Integer department = Integer.parseInt( departmentId);
             return departmentService.departmentEmployees(department).toString();
         }
+
     }
+
 }

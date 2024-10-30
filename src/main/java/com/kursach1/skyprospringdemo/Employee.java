@@ -39,4 +39,5 @@ public class Employee {
                 ", salary=" + salary +
                 ", department=" + department + "\n";
     }
+
 }
