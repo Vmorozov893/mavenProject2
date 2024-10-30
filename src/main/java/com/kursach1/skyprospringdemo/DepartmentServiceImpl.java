@@ -19,7 +19,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         return employeeService.getAll();
     }
 
-    public Employee employeeWithMaxSalary(int departmentId){
+    public Employee employeeWithMaxSalary(Integer departmentId){
         List <Integer> listOfSalary = employeeService.getAll().values().stream()
                 .filter(e->e.getDepartment().equals(departmentId))
                 .map(Employee::getSalary)
@@ -32,7 +32,7 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .orElseThrow();
     }
 
-    public Employee employeeWithMinSalary(int departmentId){
+    public Employee employeeWithMinSalary(Integer departmentId){
         List <Integer> listOfSalary = employeeService.getAll().values().stream()
                 .filter(e->e.getDepartment().equals(departmentId))
                 .map(Employee::getSalary)
@@ -43,6 +43,20 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .filter(e->e.getSalary().equals(minSalary))
                 .findFirst()
                 .orElseThrow();
+    }
+
+    public List<Employee> departmentEmployees (Integer departmentId){
+        return employeeService.getAll().values().stream()
+                .filter(e->e.getDepartment().equals(departmentId))
+                .toList();
+    }
+    public List< List < Employee > > employeesByDepartments(){
+        return employeeService.getAll().values().stream()
+                .map(Employee::getDepartment)
+                .sorted()
+                .distinct()
+                .map(this::departmentEmployees)
+                .toList();
     }
 
 }

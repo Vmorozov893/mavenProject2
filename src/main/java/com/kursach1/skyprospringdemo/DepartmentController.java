@@ -21,13 +21,23 @@ public class DepartmentController {
     }
 
     @GetMapping(path = "max-salary")
-    public String maxSalary(@RequestParam int departmentId){
+    public String maxSalary(@RequestParam Integer departmentId){
         return departmentService.employeeWithMaxSalary(departmentId).toString();
     }
 
     @GetMapping(path = "min-salary")
-    public String minSalary(@RequestParam int departmentId){
+    public String minSalary(@RequestParam Integer departmentId){
         return departmentService.employeeWithMinSalary(departmentId).toString();
     }
 
+    @GetMapping(path = "all")
+    public String departmentEmployees(@RequestParam(defaultValue = "null") String departmentId){
+        if(departmentId.equals("null")){
+            return departmentService.employeesByDepartments().toString();
+        }
+        else{
+            Integer department = Integer.parseInt( departmentId);
+            return departmentService.departmentEmployees(department).toString();
+        }
+    }
 }

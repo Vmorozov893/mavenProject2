@@ -31,7 +31,19 @@ public class EmployeeController {
 
     @GetMapping(path = "map")
     public String list(){
-        return map.getAllEmployees().toString();
+        return map.getAll().values().toString();
+    }
+
+    @GetMapping(path = "fillOutTheMap")
+    public String fillOutTheMap(){
+        map.addEmployee("Ivanov","Ivan",65_000,3);
+        map.addEmployee("Petrov","Petr",81_000,2);
+        map.addEmployee("Voronov","Denis",33_000,1);
+        map.addEmployee("Mironov","Nikolay",105_000,3);
+        map.addEmployee("Demidov","Michael",90_000,2);
+        map.addEmployee("Barinov","Victor",100_000,1);
+        map.addEmployee("Lavrov","Maksim",55_000,3);
+        return "Map is full!";
     }
 
     public EmployeeServiceImpl getMap() {

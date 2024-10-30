@@ -13,10 +13,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final HashMap<String,Employee> map = new HashMap();
     private final int maxCountEmployee = 10;
 
-    public HashMap<String,Employee> getAllEmployees() {
-        return map;
-    }
-
     public Employee addEmployee (String firstName, String lastName,int salary,int department){
 
         if(this.map.size()==maxCountEmployee){
@@ -47,6 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new EmployeeNotFoundException("Сотрудник не найден!");
         }
     }
+
 
     public HashMap<String, Employee> getAll() {
         return map;
