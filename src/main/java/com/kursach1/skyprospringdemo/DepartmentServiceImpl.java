@@ -15,42 +15,31 @@ public class DepartmentServiceImpl implements DepartmentService {
         this.employeeService = employeeService;
     }
 
-    public HashMap<String, Employee> getAll(){
+    public HashMap<String, Employee> getAll() {
         return employeeService.getAll();
     }
 
-    public Employee employeeWithMaxSalary(Integer departmentId){
-        List <Integer> listOfSalary = employeeService.getAll().values().stream()
-                .filter(e->e.getDepartment().equals(departmentId))
-                .map(Employee::getSalary)
-                .sorted().toList();
-        Integer maxSalary = listOfSalary.get(listOfSalary.size()-1);
+    public Employee employeeWithMaxSalary(Integer departmentId) {
         return employeeService.getAll().values().stream()
-                .filter(e->e.getDepartment().equals(departmentId))
-                .filter(e->e.getSalary().equals(maxSalary))
-                .findFirst()
-                .orElseThrow();
+                .filter(e -> e.getDepartment().equals(departmentId))
+                .max(Comparator.comparing(Employee::getSalary))
+                .orElse(null);
     }
 
-    public Employee employeeWithMinSalary(Integer departmentId){
-        List <Integer> listOfSalary = employeeService.getAll().values().stream()
-                .filter(e->e.getDepartment().equals(departmentId))
-                .map(Employee::getSalary)
-                .sorted().toList();
-        Integer minSalary = listOfSalary.get(0);
+    public Employee employeeWithMinSalary(Integer departmentId) {
         return employeeService.getAll().values().stream()
-                .filter(e->e.getDepartment().equals(departmentId))
-                .filter(e->e.getSalary().equals(minSalary))
-                .findFirst()
-                .orElseThrow();
+                .filter(e -> e.getDepartment().equals(departmentId))
+                .min(Comparator.comparing(Employee::getSalary))
+                .orElse(null);
     }
 
-    public List<Employee> departmentEmployees (Integer departmentId){
+    public List<Employee> departmentEmployees(Integer departmentId) {
         return employeeService.getAll().values().stream()
-                .filter(e->e.getDepartment().equals(departmentId))
+                .filter(e -> e.getDepartment().equals(departmentId))
                 .toList();
     }
-    public List< List < Employee > > employeesByDepartments(){
+
+    public List<List<Employee>> employeesByDepartments() {
         return employeeService.getAll().values().stream()
                 .map(Employee::getDepartment)
                 .sorted()

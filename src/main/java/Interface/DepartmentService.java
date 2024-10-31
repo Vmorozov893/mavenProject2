@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface DepartmentService {
     HashMap<String, Employee> getAll();
+
     Employee employeeWithMaxSalary(Integer departmentId);
+
     Employee employeeWithMinSalary(Integer departmentId);
-    List<Employee> departmentEmployees (Integer departmentId);
-    List< List < Employee > > employeesByDepartments();
+
+    List<Employee> departmentEmployees(Integer departmentId);
+
+    List<List<Employee>> employeesByDepartments();
 }
