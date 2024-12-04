@@ -1,6 +1,7 @@
 package com.kursach1.skyprospringdemo;
 
 import exeption.EmployeeAlreadyAddedException;
+import exeption.EmployeeNotFoundException;
 import exeption.EmployeeStorageIsFullException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,6 +45,26 @@ public class EmployeeServiceImplTests {
                 EmployeeAlreadyAddedException.class,
                 () -> {
                     employeeServiceimpl.addEmployee("Добрыня", "Никитич", 100_000, 1);
+                });
+    }
+    @Test
+    public void deleteEmployeeTest1(){
+        Employee employeeToAdd = new Employee("Илья", "Муромец", 300_000, 1);
+
+        Employee addedEmployee = employeeServiceimpl.addEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName(), employeeToAdd.getSalary(), employeeToAdd.getDepartment());
+
+        Employee deletedEmployee = employeeServiceimpl.deleteEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName());
+
+        Assertions.assertEquals(employeeToAdd, deletedEmployee);
+    }
+
+    @Test
+    public void deleteEmployeeTest2(){
+
+        Assertions.assertThrows(
+                EmployeeNotFoundException.class,
+                () -> {
+                    employeeServiceimpl.deleteEmployee("Добрыня","Никитич");
                 });
     }
 
