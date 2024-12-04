@@ -48,4 +48,10 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .toList();
     }
 
+    public int sumSalary(Integer departmentId) {
+        return employeeService.getAll().values().stream()
+                .mapToInt(Employee::getSalary)
+                .sum();
+    }
+
 }

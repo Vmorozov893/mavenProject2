@@ -1,15 +1,12 @@
 package com.kursach1.skyprospringdemo;
 
 import Interface.DepartmentService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
-@RequestMapping("departments")
+@RequestMapping("department")
 public class DepartmentController {
     private final DepartmentService departmentService;
 
@@ -17,23 +14,34 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping(path = "map")
+    @GetMapping(path = "employees")
     public String getAll() {
         return departmentService.getAll().toString();
     }
 
-    @GetMapping(path = "max-salary")
-    public String maxSalary(@RequestParam Integer departmentId) {
+    @GetMapping(path = "{departmentId}/salary/max")
+    public String maxSalary(@PathVariable Integer departmentId) {
         return departmentService.employeeWithMaxSalary(departmentId).toString();
     }
 
-    @GetMapping(path = "min-salary")
-    public String minSalary(@RequestParam Integer departmentId) {
+    @GetMapping(path = "{departmentId}/salary/min")
+    public String minSalary(@PathVariable Integer departmentId) {
         return departmentService.employeeWithMinSalary(departmentId).toString();
     }
 
-    @GetMapping(path = "all")
-    public String departmentEmployees(@RequestParam Optional<Integer> departmentId) {
+    @GetMapping(path = "{departmentId}/employees")
+    public String departmentEmployees(@PathVariable Optional<Integer> departmentId) {
+        if (departmentId.isEmpty()) {
+            return departmentService.employeesByDepartments().toString();
+        } else {
+
+            return departmentService.departmentEmployees(departmentId.get()).toString();
+        }
+
+    }
+
+    @GetMapping(path = "{departmentId}/salary/sum")
+    public String departmentSumSalary(@PathVariable Optional<Integer> departmentId) {
         if (departmentId.isEmpty()) {
             return departmentService.employeesByDepartments().toString();
         } else {
