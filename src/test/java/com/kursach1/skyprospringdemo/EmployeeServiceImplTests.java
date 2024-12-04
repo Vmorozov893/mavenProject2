@@ -68,4 +68,26 @@ public class EmployeeServiceImplTests {
                 });
     }
 
+    @Test
+    public void findEmployeeTest1(){
+        Employee employeeToAdd = new Employee("Илья", "Муромец", 300_000, 1);
+
+        Employee addedEmployee = employeeServiceimpl.addEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName(), employeeToAdd.getSalary(), employeeToAdd.getDepartment());
+
+        Employee findedEmployee = employeeServiceimpl.findEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName());
+
+        Assertions.assertEquals(employeeToAdd, findedEmployee);
+    }
+
+    @Test
+    public void findEmployeeTest2(){
+
+        Assertions.assertThrows(
+                EmployeeNotFoundException.class,
+                () -> {
+                    employeeServiceimpl.findEmployee("Добрыня","Никитич");
+                });
+    }
+
+
 }
