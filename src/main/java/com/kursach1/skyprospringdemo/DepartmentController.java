@@ -14,9 +14,14 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping(path = "employees")
-    public String getAll() {
-        return departmentService.getAll().toString();
+    @GetMapping(path = "{departmentId}/employees")
+    public String departmentEmployees(@PathVariable Optional<Integer> departmentId) {
+        return departmentService.departmentEmployees(departmentId.get()).toString();
+    }
+
+    @GetMapping(path = "{departmentId}/salary/sum")
+    public int departmentSumSalary(@PathVariable Integer departmentId) {
+        return departmentService.sumSalary(departmentId);
     }
 
     @GetMapping(path = "{departmentId}/salary/max")
@@ -29,26 +34,8 @@ public class DepartmentController {
         return departmentService.employeeWithMinSalary(departmentId).toString();
     }
 
-    @GetMapping(path = "{departmentId}/employees")
-    public String departmentEmployees(@PathVariable Optional<Integer> departmentId) {
-        if (departmentId.isEmpty()) {
-            return departmentService.employeesByDepartments().toString();
-        } else {
-
-            return departmentService.departmentEmployees(departmentId.get()).toString();
-        }
-
+    @GetMapping(path = "employees")
+    public String getAll() {
+        return departmentService.employeesByDepartments().toString();
     }
-
-    @GetMapping(path = "{departmentId}/salary/sum")
-    public String departmentSumSalary(@PathVariable Optional<Integer> departmentId) {
-        if (departmentId.isEmpty()) {
-            return departmentService.employeesByDepartments().toString();
-        } else {
-
-            return departmentService.departmentEmployees(departmentId.get()).toString();
-        }
-
-    }
-
 }
