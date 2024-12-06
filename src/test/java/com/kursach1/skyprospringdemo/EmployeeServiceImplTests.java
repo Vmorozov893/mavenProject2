@@ -20,14 +20,20 @@ public class EmployeeServiceImplTests {
         employeeServiceimpl = new EmployeeServiceImpl();
     }
 
-    private Employee addEmployee(){
-        return new Employee("Илья", "Муромец", 300_000, 1);
+    private void addEmployee(int countEmployee){
+        for (int i = 1; i <= countEmployee; i++) {
+            employeeServiceimpl.addEmployee("Илья" + i, "Муромец", 100_000, 1);
+        }
+    }
+    private Employee addEmployee(Employee employeeToAdd){
+        employeeToAdd = employeeServiceimpl.addEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName(), employeeToAdd.getSalary(), employeeToAdd.getDepartment());
+        return employeeToAdd;
     }
     @Test
     public void addEmployeeTest1() {
-        Employee employeeToAdd = addEmployee();
+        Employee employeeToAdd = new Employee("Илья", "Муромец", 300_000, 1);
 
-        Employee addedEmployee = employeeServiceimpl.addEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName(), employeeToAdd.getSalary(), employeeToAdd.getDepartment());
+        Employee addedEmployee = addEmployee(employeeToAdd);
 
         Assertions.assertEquals(employeeToAdd, addedEmployee);
     }
@@ -35,9 +41,7 @@ public class EmployeeServiceImplTests {
     @Test
     public void addEmployeeTest2() {
         int maxCountEmployee = 10;
-        for (int i = 1; i <= maxCountEmployee; i++) {
-            employeeServiceimpl.addEmployee("Илья" + i, "Муромец", 100_000, 1);
-        }
+        addEmployee(maxCountEmployee);
 
         EmployeeStorageIsFullException thrown = assertThrows(EmployeeStorageIsFullException.class, () -> {
                     employeeServiceimpl.addEmployee("Добрыня", "Никитич", 100_000, 1);
@@ -47,19 +51,20 @@ public class EmployeeServiceImplTests {
     }
     @Test
     public void addEmployeeTest3() {
-        employeeServiceimpl.addEmployee("Добрыня", "Никитич", 100_000, 1);
+        Employee employeeToAdd = new Employee("Добрыня", "Никитич", 100_000, 1);
+        addEmployee(employeeToAdd);
 
         EmployeeAlreadyAddedException thrown = assertThrows(EmployeeAlreadyAddedException.class, () -> {
-                    employeeServiceimpl.addEmployee("Добрыня", "Никитич", 100_000, 1);
+            addEmployee(employeeToAdd);
                 });
 
         Assertions.assertEquals("Такой сотрудник уже есть!", thrown.getMessage());
     }
     @Test
     public void deleteEmployeeTest1(){
-        Employee employeeToAdd = addEmployee();
+        Employee employeeToAdd = new Employee("Добрыня", "Никитич", 100_000, 1);
 
-        employeeServiceimpl.addEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName(), employeeToAdd.getSalary(), employeeToAdd.getDepartment());
+        addEmployee(employeeToAdd);
 
         Employee deletedEmployee = employeeServiceimpl.deleteEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName());
 
@@ -77,9 +82,9 @@ public class EmployeeServiceImplTests {
 
     @Test
     public void findEmployeeTest1(){
-        Employee employeeToAdd = addEmployee();
+        Employee employeeToAdd = new Employee("Добрыня", "Никитич", 100_000, 1);
 
-        employeeServiceimpl.addEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName(), employeeToAdd.getSalary(), employeeToAdd.getDepartment());
+        addEmployee(employeeToAdd);
 
         Employee findedEmployee = employeeServiceimpl.findEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName());
 
