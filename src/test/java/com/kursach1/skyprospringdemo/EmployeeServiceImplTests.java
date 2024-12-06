@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class EmployeeServiceImplTests {
 
     private EmployeeServiceImpl employeeServiceimpl;
@@ -31,21 +34,21 @@ public class EmployeeServiceImplTests {
             employeeServiceimpl.addEmployee("Илья" + i, "Муромец", 100_000, 1);
         }
 
-        Assertions.assertThrows(
-                EmployeeStorageIsFullException.class,
-                () -> {
+        EmployeeStorageIsFullException thrown = assertThrows(EmployeeStorageIsFullException.class, () -> {
                     employeeServiceimpl.addEmployee("Добрыня", "Никитич", 100_000, 1);
                 });
+
+        Assertions.assertEquals("Превышен лимит количества сотрудников в фирме!", thrown.getMessage());
     }
     @Test
     public void addEmployeeTest3() {
         employeeServiceimpl.addEmployee("Добрыня", "Никитич", 100_000, 1);
 
-        Assertions.assertThrows(
-                EmployeeAlreadyAddedException.class,
-                () -> {
+        EmployeeAlreadyAddedException thrown = assertThrows(EmployeeAlreadyAddedException.class, () -> {
                     employeeServiceimpl.addEmployee("Добрыня", "Никитич", 100_000, 1);
                 });
+
+        Assertions.assertEquals("Такой сотрудник уже есть!", thrown.getMessage());
     }
     @Test
     public void deleteEmployeeTest1(){
@@ -61,11 +64,10 @@ public class EmployeeServiceImplTests {
     @Test
     public void deleteEmployeeTest2(){
 
-        Assertions.assertThrows(
-                EmployeeNotFoundException.class,
-                () -> {
+        EmployeeNotFoundException thrown = assertThrows(EmployeeNotFoundException.class, () -> {
                     employeeServiceimpl.deleteEmployee("Добрыня","Никитич");
                 });
+        Assertions.assertEquals("Сотрудник не найден!", thrown.getMessage());
     }
 
     @Test
@@ -82,11 +84,11 @@ public class EmployeeServiceImplTests {
     @Test
     public void findEmployeeTest2(){
 
-        Assertions.assertThrows(
-                EmployeeNotFoundException.class,
-                () -> {
-                    employeeServiceimpl.findEmployee("Добрыня","Никитич");
-                });
+        EmployeeNotFoundException thrown = Assertions.assertThrows(EmployeeNotFoundException.class, () -> {
+            employeeServiceimpl.findEmployee("Добрыня","Никитич");
+        });
+        Assertions.assertEquals("Сотрудник не найден!", thrown.getMessage());
+
     }
 
 
