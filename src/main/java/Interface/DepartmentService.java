@@ -4,6 +4,7 @@ import com.kursach1.skyprospringdemo.Employee;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface DepartmentService {
 
@@ -15,6 +16,6 @@ public interface DepartmentService {
 
     Employee employeeWithMinSalary(Integer departmentId);
 
-    List<List<Employee>> employeesByDepartments();
+    Map<Integer,List<Employee>> employeesByDepartments();
 
 }

@@ -88,6 +88,7 @@ public class DepartmentServiceImplTests {
         Integer departmentId1 = 1;
         Integer departmentId2 = 2;
 
+
         List<Employee> expectedEmployeeDepartmentId1 = employees.values().stream()
                 .filter(e -> e.getDepartment().equals(departmentId1))
                 .toList();
@@ -95,16 +96,17 @@ public class DepartmentServiceImplTests {
                 .filter(e -> e.getDepartment().equals(departmentId2))
                 .toList();
 
-        List<List<Employee>> expectedEmployees = new ArrayList<>();
-        expectedEmployees.add(expectedEmployeeDepartmentId1);
-        expectedEmployees.add(expectedEmployeeDepartmentId2);
+        Map <Integer,List<Employee>> expectedEmployeeByDepartment = new HashMap<>() {{
+            put(1,expectedEmployeeDepartmentId1);
+            put(2,expectedEmployeeDepartmentId2);
+        }};
 
 
-        Mockito.when(employeeService.getAll()).thenReturn((HashMap<String, Employee>) employees);
+        Mockito.when(employeeService.getAll()).thenReturn(employees);
 
-        List<List<Employee>> actualEmployees = departmentService.employeesByDepartments();
+        Map<Integer,List<Employee>> actualEmployees = departmentService.employeesByDepartments();
 
-        Assertions.assertEquals(expectedEmployees, actualEmployees);
+        Assertions.assertEquals(expectedEmployeeByDepartment, actualEmployees);
 
     }
 

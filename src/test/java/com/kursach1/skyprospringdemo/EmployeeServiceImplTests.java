@@ -34,7 +34,8 @@ public class EmployeeServiceImplTests {
 
     @Test
     public void addEmployeeTest2() {
-        for (int i = 1; i <= employeeServiceimpl.getMaxCountEmployee(); i++) {
+        int maxCountEmployee = 10;
+        for (int i = 1; i <= maxCountEmployee; i++) {
             employeeServiceimpl.addEmployee("Илья" + i, "Муромец", 100_000, 1);
         }
 

@@ -49,7 +49,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         return map;
     }
 
-    public int getMaxCountEmployee() {
-        return maxCountEmployee;
-    }
 }

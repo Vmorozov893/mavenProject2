@@ -42,13 +42,10 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .orElse(null);
     }
 
-    public List<List<Employee>> employeesByDepartments() {
+    public Map<Integer, List<Employee>> employeesByDepartments() {
         return employeeService.getAll().values().stream()
-                .map(Employee::getDepartment)
-                .sorted()
-                .distinct()
-                .map(this::departmentEmployees)
-                .toList();
+                .collect(Collectors.groupingBy(Employee::getDepartment));
+
     }
 
 
