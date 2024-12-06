@@ -3,6 +3,7 @@ package com.kursach1.skyprospringdemo;
 import exeption.EmployeeAlreadyAddedException;
 import exeption.EmployeeNotFoundException;
 import exeption.EmployeeStorageIsFullException;
+import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,9 +20,12 @@ public class EmployeeServiceImplTests {
         employeeServiceimpl = new EmployeeServiceImpl();
     }
 
+    private Employee addEmployee(){
+        return new Employee("Илья", "Муромец", 300_000, 1);
+    }
     @Test
     public void addEmployeeTest1() {
-        Employee employeeToAdd = new Employee("Илья", "Муромец", 300_000, 1);
+        Employee employeeToAdd = addEmployee();
 
         Employee addedEmployee = employeeServiceimpl.addEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName(), employeeToAdd.getSalary(), employeeToAdd.getDepartment());
 
@@ -52,9 +56,9 @@ public class EmployeeServiceImplTests {
     }
     @Test
     public void deleteEmployeeTest1(){
-        Employee employeeToAdd = new Employee("Илья", "Муромец", 300_000, 1);
+        Employee employeeToAdd = addEmployee();
 
-        Employee addedEmployee = employeeServiceimpl.addEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName(), employeeToAdd.getSalary(), employeeToAdd.getDepartment());
+        employeeServiceimpl.addEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName(), employeeToAdd.getSalary(), employeeToAdd.getDepartment());
 
         Employee deletedEmployee = employeeServiceimpl.deleteEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName());
 
@@ -72,9 +76,9 @@ public class EmployeeServiceImplTests {
 
     @Test
     public void findEmployeeTest1(){
-        Employee employeeToAdd = new Employee("Илья", "Муромец", 300_000, 1);
+        Employee employeeToAdd = addEmployee();
 
-        Employee addedEmployee = employeeServiceimpl.addEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName(), employeeToAdd.getSalary(), employeeToAdd.getDepartment());
+        employeeServiceimpl.addEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName(), employeeToAdd.getSalary(), employeeToAdd.getDepartment());
 
         Employee findedEmployee = employeeServiceimpl.findEmployee(employeeToAdd.getFirstName(), employeeToAdd.getLastName());
 

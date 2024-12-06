@@ -23,7 +23,7 @@ public class DepartmentServiceImplTests {
     @InjectMocks
     private DepartmentServiceImpl departmentService;
 
-    private final Map<String, Employee> employees = new HashMap<>() {{
+    private final HashMap<String, Employee> employees = new HashMap<>() {{
         put("ИльяМуромец", new Employee("Илья", "Муромец", 300_000, 1));
         put("ДобрыняНикитич", new Employee("Добрыня", "Никитич", 200_000, 1));
         put("АлёшаПопович", new Employee("Алёша", "Попович", 100_000, 1));
