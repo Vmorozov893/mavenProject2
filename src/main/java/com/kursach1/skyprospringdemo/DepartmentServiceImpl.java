@@ -15,8 +15,17 @@ public class DepartmentServiceImpl implements DepartmentService {
         this.employeeService = employeeService;
     }
 
-    public HashMap<String, Employee> getAll() {
-        return employeeService.getAll();
+    public List<Employee> departmentEmployees(Integer departmentId) {
+        return employeeService.getAll().values().stream()
+                .filter(e -> e.getDepartment().equals(departmentId))
+                .toList();
+    }
+
+    public int sumSalary(Integer departmentId) {
+        return employeeService.getAll().values().stream()
+                .filter(e -> e.getDepartment().equals(departmentId))
+                .mapToInt(Employee::getSalary)
+                .sum();
     }
 
     public Employee employeeWithMaxSalary(Integer departmentId) {
@@ -33,19 +42,11 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .orElse(null);
     }
 
-    public List<Employee> departmentEmployees(Integer departmentId) {
+    public Map<Integer, List<Employee>> employeesByDepartments() {
         return employeeService.getAll().values().stream()
-                .filter(e -> e.getDepartment().equals(departmentId))
-                .toList();
+                .collect(Collectors.groupingBy(Employee::getDepartment));
+
     }
 
-    public List<List<Employee>> employeesByDepartments() {
-        return employeeService.getAll().values().stream()
-                .map(Employee::getDepartment)
-                .sorted()
-                .distinct()
-                .map(this::departmentEmployees)
-                .toList();
-    }
 
 }

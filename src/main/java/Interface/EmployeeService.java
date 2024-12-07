@@ -11,6 +11,6 @@ public interface EmployeeService {
 
     Employee findEmployee(String firstName, String lastName);
 
-    public HashMap<String, Employee> getAll();
+    HashMap<String, Employee> getAll();
 
 }
