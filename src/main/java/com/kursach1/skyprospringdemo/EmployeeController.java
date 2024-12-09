@@ -1,5 +1,7 @@
 package com.kursach1.skyprospringdemo;
 
+import exeption.EmployeeAlreadyAddedException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +20,9 @@ public class EmployeeController {
 
     @GetMapping(path = "add")
     public String add(@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, @RequestParam(required = false) Integer salary, @RequestParam(required = false) Integer department) {
+        if(!StringUtils.isAlpha(firstName+lastName)){
+            throw new EmployeeAlreadyAddedException("Имя или фамилия может состоять только из букв!");
+        }
         return map.addEmployee(firstName, lastName, salary, department).toString();
     }
 
